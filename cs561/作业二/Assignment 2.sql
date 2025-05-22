@@ -1,0 +1,192 @@
+-- 20031937
+-- Junhe Jiao
+
+
+-- 1 --
+WITH bef as(
+SELECT s1.cust, s1.prod, s1.month, AVG(s2.quant) prv_avg
+FROM sales s1 LEFT JOIN sales s2
+ON s1.cust = s2.cust AND s1.prod = s2.prod AND
+s1.month = s2.month + 1
+GROUP BY s1.cust, s1.prod, s1.month
+),
+aft as(
+SELECT s1.cust, s1.prod, s1.month, AVG(s2.quant) aft_avg
+FROM sales s1 LEFT JOIN sales s2
+ON s1.cust = s2.cust AND s1.prod = s2.prod AND
+s1.month = s2.month - 1
+GROUP BY s1.cust, s1.prod, s1.month
+),
+referance as (
+SELECT b.cust, b.prod, b.month, prv_avg, aft_avg
+FROM bef b NATURAL JOIN aft
+)
+SELECT r.cust, r.prod, r.month, COUNT(s.quant)
+FROM referance r LEFT JOIN sales s
+ON   s.cust = r.cust AND s.prod = r.prod AND s.month = r.month AND
+	  ((s.quant between r.prv_avg and r.aft_avg) OR (s.quant between r.aft_avg and r.prv_avg))
+GROUP BY r.cust, r.prod, r.month
+ORDER BY 1,2,3
+
+
+
+SELECT bef.cust "CUSTOMER", bef.prod "PRODUCT", bef.month "MONTH", cnt.count "SALES_COUNT_BETWEEN_AVGS"
+FROM bef LEFT JOIN cnt
+ON bef.cust = cnt.cust AND bef.prod = cnt.prod AND bef.month = cnt.month;
+-- last step is to deal with <null> items
+
+-- 2 --
+WITH t1 as(
+SELECT s1.cust, s1.prod, s1.month, ROUND(AVG(s2.quant)) before_avg
+FROM sales s1 LEFT JOIN sales s2
+ON s1.cust = s2.cust AND s1.prod = s2.prod AND
+s1.month = s2.month + 1
+GROUP BY s1.cust, s1.prod, s1.month
+),
+t2 as(
+SELECT s1.cust, s1.prod, s1.month, ROUND(AVG(s1.quant)) during_avg
+FROM sales s1
+GROUP BY s1.cust, s1.prod, s1.month
+),
+t3 as(
+SELECT s1.cust, s1.prod, s1.month, ROUND(AVG(s2.quant)) after_avg
+FROM sales s1 LEFT JOIN sales s2
+ON s1.cust = s2.cust AND s1.prod = s2.prod AND
+s1.month = s2.month - 1
+GROUP BY s1.cust, s1.prod, s1.month
+)
+SELECT t1.cust "CUSTOMER", t1.prod "PRODUCT", t1.month "MONTH", before_avg "BEFORE_AVG", during_avg "DURING_AVG", after_avg "AFTER_AVG"
+FROM t1 NATURAL JOIN t2 NATURAL JOIN t3;
+
+-- 3 --
+WITH t1 as(
+SELECT s1.cust, s1.prod, s1.state, ROUND(AVG(s1.quant)) PROD_AVG
+FROM sales s1 
+GROUP BY s1.cust, s1.prod, s1.state
+),
+t2 as(
+SELECT s1.cust, s1.prod, s1.state, ROUND(AVG(s2.quant)) OTHER_CUST_AVG
+FROM t1 s1 LEFT JOIN sales s2
+ON s1.cust != s2.cust AND s1.prod = s2.prod AND s1.state = s2.state 
+GROUP BY s1.cust, s1.prod, s1.state
+),
+t3 as(
+SELECT s1.cust, s1.prod, s1.state, ROUND(AVG(s2.quant)) OTHER_PROD_AVG
+FROM t1 s1 LEFT JOIN sales s2
+ON s1.cust = s2.cust AND s1.prod != s2.prod AND s1.state = s2.state
+GROUP BY s1.cust, s1.prod, s1.state
+),
+t4 as(
+SELECT s1.cust, s1.prod, s1.state, ROUND(AVG(s2.quant)) OTHER_STATE_AVG
+FROM t1 s1 LEFT JOIN sales s2
+ON s1.cust = s2.cust AND s1.prod = s2.prod AND s1.state != s2.state
+GROUP BY s1.cust, s1.prod, s1.state
+)
+SELECT t1.cust "CUSTOMER", t1.prod "PRODUCT", t1.state "STATE", PROD_AVG "PROD_AVG", OTHER_CUST_AVG "OTHER_CUST_AVG", OTHER_PROD_AVG "OTHER_PROD_AVG", OTHER_STATE_AVG "OTHER_STATE_AVG"
+FROM t1 NATURAL JOIN t2 NATURAL JOIN t3 NATURAL JOIN t4
+ORDER BY t1.cust, t1.prod, t1.state;
+
+-- 4 --
+WITH t1 as (
+SELECT cust, MAX(quant)
+FROM sales
+WHERE sales.state = 'NJ'
+GROUP BY cust
+),
+t2 as (
+SELECT sales.cust, MAX(quant)
+FROM sales, t1
+WHERE sales.cust = t1.cust AND sales.quant < t1.max AND sales.state = 'NJ'
+GROUP BY sales.cust
+),
+t3 as (
+SELECT sales.cust, MAX(quant)
+FROM sales, t2
+WHERE sales.cust = t2.cust AND sales.quant < t2.max AND sales.state = 'NJ'
+GROUP BY sales.cust
+),
+t4 as(
+SELECT * FROM t1
+UNION
+SELECT * FROM t2
+UNION
+SELECT * FROM t3
+)
+SELECT t4.cust "CUSTOMER", t4.max "QUANTITY", sales.prod "PRODUCT", sales.date "DATE"
+FROM t4, sales
+WHERE t4.cust = sales.cust AND t4.max = sales.quant AND sales.state = 'NJ'
+ORDER BY t4.cust, t4.max DESC;
+
+-- 5 --
+WITH base as (
+SELECT DISTINCT prod, quant
+FROM sales
+ORDER BY 1,2
+),
+pos as (
+SELECT base.prod, base.quant, count(sales.quant) pos
+FROM base, sales
+WHERE base.prod = sales.prod AND base.quant >= sales.quant
+GROUP BY base.prod, base.quant
+),
+med_pos as (
+SELECT p.prod, MIN(p.pos) median_pos
+FROM pos p
+WHERE p.pos >= (
+    SELECT CEILING(COUNT(s.quant) / 2)
+    FROM sales s
+    WHERE s.prod = p.prod
+    )
+GROUP BY p.prod
+),
+meds as (
+SELECT p.prod, p.quant, p.pos
+FROM pos p, med_pos mp
+WHERE p.prod = mp.prod AND p.pos >= mp.median_pos
+)
+SELECT prod "PRODUCT", MIN(quant) "MEDIAN_QUANT"
+FROM meds
+GROUP BY prod;
+
+
+WITH avg_quant_t as
+(
+  SELECT cust, prod, month, AVG(quant) as avg_quant
+    FROM sales
+	GROUP BY cust, prod, month
+),
+prev_avg_quant_t as
+(
+  SELECT s.cust, s.prod, s.month, s2.avg_quant AS prev_avg
+    FROM avg_quant_t s LEFT JOIN avg_quant_t s2
+    ON s.cust = s2.cust AND s.prod = s2.prod AND s.month - 1 = s2.month
+),
+next_avg_quant_t as
+(
+  SELECT s.cust, s.prod, s.month, s2.avg_quant AS next_avg
+    FROM avg_quant_t s LEFT JOIN avg_quant_t s2
+    ON s.cust = s2. cust AND s.prod = s2. prod AND s.month + 1 = s2.month
+),
+cur_prev_avg_quant as
+(
+  SELECT s.cust, s.prod, s.month, s.avg_quant, s2.month AS prev_month, s2.prev_avg
+    FROM avg_quant_t s LEFT JOIN prev_avg_quant_t s2
+    ON s.cust = s2.cust AND s.prod = s2. prod AND s.month = s2.month
+	-- GROUP BY s2.cust, s2.prod, s2.month
+	ORDER BY cust, prod, month
+),
+cur_prev_next_avg_quant as
+(
+  SELECT s.cust, s.prod, s.month, s.avg_quant, s.prev_month, s.prev_avg, s2.month as next_month, s2.next_avg
+    FROM cur_prev_avg_quant s LEFT JOIN next_avg_quant_t s2
+    ON s.cust = s2.cust AND s.prod = s2. prod AND s.month = s2.month
+	-- GROUP BY s2.cust, s2.prod, s2.month
+	ORDER BY cust, prod, month
+)
+SELECT c.cust, c.prod, c.month, count(s.quant)
+	FROM cur_prev_next_avg_quant c LEFT JOIN  sales s
+	ON c.cust = s.cust AND c.prod = s.prod AND c.month = s.month
+	AND ((s.quant BETWEEN c.prev_avg AND c.next_avg) OR (s.quant BETWEEN c.next_avg AND c.prev_avg))
+	GROUP BY c.cust, c.prod, c.month
+	ORDER BY c.cust, c.prod, c.month
+

@@ -1,0 +1,97 @@
+Apr 18, 2025 4:25:35 PM edu.stevens.cs522.chat.webservice.Main info
+INFO: Starting HTTP server...
+Apr 18, 2025 4:25:35 PM org.glassfish.jersey.server.wadl.WadlFeature configure
+WARNING: JAXBContext implementation could not be found. WADL feature is disabled.
+Apr 18, 2025 4:25:35 PM org.glassfish.grizzly.http.server.NetworkListener start
+INFO: Started listener bound to [localhost:8080]
+Apr 18, 2025 4:25:35 PM org.glassfish.grizzly.http.server.HttpServer start
+INFO: [HttpServer] Started.
+Apr 18, 2025 4:25:35 PM edu.stevens.cs522.chat.webservice.Main info
+INFO: HTTP service available at http://localhost:8080...
+Apr 18, 2025 4:25:35 PM edu.stevens.cs522.chat.webservice.Main info
+INFO: Starting gRPC server...
+Apr 18, 2025 4:25:35 PM edu.stevens.cs522.chat.webservice.Main info
+INFO: GRPC service available at grpc://localhost:9090...
+Apr 18, 2025 4:25:35 PM edu.stevens.cs522.chat.webservice.Main info
+INFO: Hit enter to stop...
+Apr 18, 2025 4:26:00 PM edu.stevens.cs522.chat.webservice.ChatResource messages
+INFO: DEBUG: Received messages request
+Apr 18, 2025 4:26:00 PM edu.stevens.cs522.chat.webservice.ChatResource$2 write
+INFO: DEBUG: Listed all messages.
+Apr 18, 2025 4:30:58 PM edu.stevens.cs522.chat.webservice.ChatResource messages
+INFO: DEBUG: Received messages request
+Apr 18, 2025 4:30:58 PM edu.stevens.cs522.chat.webservice.ChatResource$2 write
+INFO: DEBUG: Listed all messages.
+Apr 18, 2025 4:31:00 PM edu.stevens.cs522.chat.webservice.ChatResource messages
+INFO: DEBUG: Received messages request
+Apr 18, 2025 4:31:00 PM edu.stevens.cs522.chat.webservice.ChatResource$2 write
+INFO: DEBUG: Listed all messages.
+Apr 18, 2025 4:33:26 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Received registration request (appId=8bcec156-1234-4e28-ba5f-9b3865e7b004, chat-name=joe)
+Apr 18, 2025 4:33:26 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Successfully registered user joe with UUID 8bcec156-1234-4e28-ba5f-9b3865e7b004.
+Apr 18, 2025 4:33:38 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Received registration request (appId=8bcec156-1234-4e28-ba5f-9b3865e7b004, chat-name=joe)
+Apr 18, 2025 4:33:38 PM edu.stevens.cs522.chat.webservice.ChatResource register
+WARNING: Failed to register app, already registered? 8bcec156-1234-4e28-ba5f-9b3865e7b004
+Apr 18, 2025 4:33:38 PM edu.stevens.cs522.chat.webservice.ChatResource register
+SEVERE: Exception while registering client.
+javax.ws.rs.WebApplicationException: HTTP 409 Conflict
+	at edu.stevens.cs522.chat.webservice.ChatResource.register(ChatResource.java:202)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:52)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:146)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:189)
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:176)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:93)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:478)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:400)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:81)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:256)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:248)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:244)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:292)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:274)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:244)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:265)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:235)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:684)
+	at org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer.service(GrizzlyHttpContainer.java:356)
+	at org.glassfish.grizzly.http.server.HttpHandler$1.run(HttpHandler.java:200)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:569)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:549)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+
+Apr 18, 2025 4:36:42 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Received registration request (appId=ddc243ef-7fda-4b2c-af08-551c1f705b23, chat-name=joe)
+Apr 18, 2025 4:36:42 PM edu.stevens.cs522.chat.web.model.Peers register
+INFO: Re-registering user with chat name joe, app id ddc243ef-7fda-4b2c-af08-551c1f705b23
+Apr 18, 2025 4:36:42 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Successfully registered user joe with UUID ddc243ef-7fda-4b2c-af08-551c1f705b23.
+Apr 18, 2025 4:39:04 PM edu.stevens.cs522.chat.webservice.ChatResource postMessage
+INFO: Received postMessage request (name = joe)
+Apr 18, 2025 4:39:04 PM edu.stevens.cs522.chat.webservice.ChatActivity addMessage
+INFO: Dynamically adding chatroom (We are not syncing chatrooms with the server
+Apr 18, 2025 4:39:04 PM edu.stevens.cs522.chat.webservice.ChatResource postMessage
+INFO: Received message "jhohio" (chatroom hhh)
+Apr 18, 2025 4:39:40 PM edu.stevens.cs522.chat.webservice.ChatResource postMessage
+INFO: Received postMessage request (name = joe)
+Apr 18, 2025 4:39:40 PM edu.stevens.cs522.chat.webservice.ChatResource postMessage
+INFO: Received message "8y78y7" (chatroom hhh)
+Apr 18, 2025 4:41:13 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Received registration request (appId=2d22a670-a2d2-42e2-87e0-e5bd880ea339, chat-name=tom)
+Apr 18, 2025 4:41:13 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Successfully registered user tom with UUID 2d22a670-a2d2-42e2-87e0-e5bd880ea339.
+Apr 18, 2025 4:43:37 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Received registration request (appId=de4226fd-5d01-4873-86ea-21f63f3a3be9, chat-name=tim)
+Apr 18, 2025 4:43:37 PM edu.stevens.cs522.chat.webservice.ChatResource register
+INFO: Successfully registered user tim with UUID de4226fd-5d01-4873-86ea-21f63f3a3be9.
+Apr 18, 2025 4:43:49 PM edu.stevens.cs522.chat.webservice.ChatResource postMessage
+INFO: Received postMessage request (name = tim)
+Apr 18, 2025 4:43:49 PM edu.stevens.cs522.chat.webservice.ChatResource postMessage
+INFO: Received message "hi" (chatroom _default)
+Apr 18, 2025 4:44:04 PM edu.stevens.cs522.chat.webservice.ChatResource postMessage
+INFO: Received postMessage request (name = tim)
+Apr 18, 2025 4:44:04 PM edu.stevens.cs522.chat.webservice.ChatResource postMessage
+INFO: Received message "1223" (chatroom _default)

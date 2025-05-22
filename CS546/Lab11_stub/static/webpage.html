@@ -1,0 +1,58 @@
+<!-- 
+Static HTML file 
+
+Your page should have a few basic user interface elements:
+
+A header tag, with an h1 naming your site, with a title for your page
+A footer with your name, student ID, and any other info about yourself you wish to include
+An empty unordered list with an id of characterList that is initially hidden.  
+A div with an id of characterDetails that is initially hidden.
+A form with an id of searchForm.
+A text input with an id of search_term.
+A label with a for attribute referencing your input
+A button to submit the form (make sure this is a button element, not an input with type="submit")
+A link that links back to the "/" route with the text "Back to All Characters" and that has an id 
+of homeLink This link will initially be hidden. 
+It will ONLY be displayed when the characterDetails element is being displayed or 
+ONLY when a search is performed and search results are being displayed.  
+You should NOT show this link on the initial character list.  
+This link will simply trigger a reload of the page, which then will display the initial list of characters
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/main.css">
+</head>
+<body>
+    <header>
+        <h1>My Character List</h1>
+    </header>
+
+    <main>
+        <ul id="characterList"></ul>
+        <div id="characterDetails"></div>
+
+        <form id="searchForm">
+            <label for="search_term">Search for a character:</label>
+            <input type="text" id="search_term" name="search_term">
+            <button type="submit">Search</button>
+        </form>
+
+        <a href="/" id="homeLink" style="display: none;">Back to All Characters</a>
+    </main>
+
+    <footer>
+        <p>Tingting Luan</p>
+        <p>20035571</p>
+    </footer>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+  <script src="/public/js/main.js"></script>
+</body>
+</html>

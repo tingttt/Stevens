@@ -1,0 +1,28 @@
+<!-- 
+This handlebar file will be rendered when the following route is hit: GET http://localhost:3000/
+ 
+This page will respond with a valid HTML document. The title of the document should be "Marvel Universe Character Search". You should have the title set as the <title> element of the HTML document and as an h1 in your document.
+
+Your page should reference a CSS file, /public/main.css; this file should have at least 10 rulesets you must use at least 5 of them on this page. 
+
+You should have a main element, and inside of the main element have a p element with a brief (2-3 sentence description) of what your website does.
+
+Also inside the main element, you will have a form; this form will POST to /searchmarveluniverse. This form will have an input and a label; You will give the input a name AND id attribute of "searchByCharactersName".  The label should properly reference the same id as the input. You should also have an input with a type of submit that submits the form (DO not use a button, you MUST use an input with type="submit"). 
+ -->
+
+
+
+
+
+    <h1>{{title}}</h1>
+    <main>
+        <p>This function allows users to search for characters within the Marvel Universe.</p> 
+        <p>By entering a character's name, the function retrieves and displays relevant information about that character. </p>
+        <p>return max 20 result from search result.</p>
+        <form action="/searchmarveluniverse" method="POST">
+        <label for="searchByCharactersName">searchByCharactersName</label>
+        <input type="text" name="searchByCharactersName" id="searchByCharactersName" placeholder="Enter character name" required>
+        <input type="submit" value="Search">
+        </form>
+    </main>
+

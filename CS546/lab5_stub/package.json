@@ -1,0 +1,16 @@
+{
+  "name": "lab5",
+  "version": "1.0.0",
+  "description": "lb5",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tingting Luan 20035571",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.2",
+    "express": "^4.21.2"
+  }
+}

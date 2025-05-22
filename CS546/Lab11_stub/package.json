@@ -1,0 +1,17 @@
+{
+  "name": "lab11_stub",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Tingting Luan 20035571",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "md5": "^2.3.0"
+  }
+}

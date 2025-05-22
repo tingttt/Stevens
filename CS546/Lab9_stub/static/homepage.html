@@ -1,0 +1,59 @@
+<!-- 
+Your page should have a few basic user interface elements:
+
+Inside the body element you will have:
+
+    -  A header element, with an h1 naming your site, (your title element inside the head element must match this)
+  
+    - You will have a main element that contains:
+        
+        - - A paragraph element with an id attribute set to "error" that will be hidden initially and you will show/hide this depending if there are errors along with changing the innerhtml to to describe the error to the user. 
+        
+        - - A form inside the main element with a method attribute of POST. You will give the form a name and id attribute of arraySortForm and the form will have the following elements nested inside the form.:
+             
+            - - - A label with a for attribute referencing your input's id,  array_input
+
+            - - - A input with a name and id attribute set as array_input and  input type of text
+
+            - - - A button element to submit the form with a name and id attribute set as submitButton (This should be a button element <button>, NOT an input).
+
+        - - A single ordered list with an id attribute of input_sorted. All the arrays you have checked so far (until you refresh the page) will appear in this list as list items. Each item in the list will alternate the text colors starting with blue, then red, then blue, then red etc..
+    
+    - A footer element (this element is outside of the main element see image of file structure on Canvas in th assignment specs) with your name, student ID, and any other info about yourself you wish to include 
+
+An example that would be displayed in LI of the list (YOU MUST DISPLAY IT WITH THE ARRAY BRACKETS [] )
+[0, 1, 2, 3, 6, 7, 9] 
+[1, 5, 6, 8, 10, 11]
+[5, 6, 7, 8, 9, 20, 25, 40] 
+[4, 6, 9, 11, 15]
+
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Array Sort</title>
+     <link rel='stylesheet' href='/public/css/myStyles.css'>
+ </head>
+ <body>
+    <header>
+        <h1>Array Sort</h1>
+    </header>
+    <main>
+        <p id="error"></p>
+        <form method="POST" name="arraySortForm" id="arraySortForm">
+            <label for="array_input">Enter Here:</label>
+            <input type="text" name="array_input" id="array_input">
+            <button type="submit" name="submitButton" id="submitButton">Sort Array</button>
+        </form>
+        <ol id="input_sorted">
+            </ol>
+    </main>
+    <footer>
+        <p>Tingting Luan</p>
+        <p>20035571</p>
+    </footer>
+    <script src='/public/js/form_process.js'></script>
+ </body>
+ </html>

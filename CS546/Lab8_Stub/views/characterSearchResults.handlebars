@@ -1,0 +1,32 @@
+{{!
+This page will respond with a valid HTML document with the results returned from the API.
+The title of the document should be "Characters Found". You should have the title set as the <title> element of the HTML
+    document and as an h1 in your document. In an h2 element, you will print the value of the supplied
+    searchByCharactersName.
+
+    Your page should reference a CSS file, /public/main.css; this file should have at least 10 rulesets you must use at
+    least 5 of them on this page. 
+
+    You should have a main element, and inside of the main element have a ol tag that has a list of up to 20 characters
+    matching the searchByCharactersName found in the request body in the following format (after searching spider). DO
+    NOT SHOW MORE THAN 20 Characters. (HINT: READ THE API DOCUMENTATION!) 
+
+
+    }}
+
+    <h1>{{title}}</h1>
+    <h2>{{searchByCharactersName}}</h2>
+    <main>
+        {{#if searchResults}}
+            <ol>
+                {{#each searchResults}}
+                    <li>
+                        <a href="/character/{{this.id}}">{{this.name}}</a>
+                    </li>
+                {{/each}}
+            </ol>
+        {{else}}
+            <p class="not-found">We're sorry, but no results were found for {{searchByCharactersName}}.</p>
+            <a href="/">Search for Another Character</a>
+        {{/if}}
+    </main>

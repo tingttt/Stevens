@@ -1,0 +1,33 @@
+{{!
+This page will be rendered when the following route is hit: GET http://localhost:3000/character/:id
+The title of the document should be the name of the character. You should have the title set as the <title> element of
+    the HTML document.  
+
+    Your page should reference a CSS file, /public/main.css; his file should have at least 10 rulesets you must use at
+    least 5 of them on this page. 
+
+    You should have a main element, and inside of the main element, you will have an article tag that has an h1 with the
+    character name,  an img which the src is set to the value read from thumbnail.path in the data which is a URL to an
+    image for the character.  NOTE: The path in the data is NOT the full image path. You will need to concatenate
+    "/portrait_uncanny.jpg" to the end of the image path in the data (see HTML example below). Please see the
+    documentation on imagesLinks to an external site..  You will have a p element that contains the character
+     description, a h2 that's content says "Comics"  and a ul  for the list of comics. You only need to display the
+    comic name  as the list items: li
+
+
+    }}
+    
+    <main>
+        <article>
+            <h1>{{character.name}}</h1>
+            <img src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}" alt="{{character.thumbnail.path}}.{{character.thumbnail.extension}}">
+            <p>{{character.description}}</p>
+            <h2>Comics</h2>
+            <ul>
+                {{#each character.comics.items}}
+                <li>{{this.name}}</li>
+                {{/each}}
+            </ul>
+        </article>
+        <a href="/">Search for Another Character</a>
+    </main>

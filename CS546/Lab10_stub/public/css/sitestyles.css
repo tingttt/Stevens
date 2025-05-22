@@ -1,0 +1,227 @@
+/* Styling
+You will create a CSS stylesheet in /public/css/sitestyles.css; this file should have at least 5 rulesets.  You will need to utilize all 5 rulesets on each of the pages (not every page has to use all 5 rulesets each but all 5 rulesets must be utilized by the various pages in your application).  So you can have some rulesets for one page, some for another page but there needs to be at least 5 total rulesets that are used between all the pages.   Depending of the user's theme preferences stored in the session, your pages will be displayed using the user's theme preferences. The background of the page should be the background color preference they selected when they signed up, and the font color will be the font color they selected when they signed up. ALL pages must have the theme applied when a user is logged in. 
+
+*/body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.themePreference {
+  background-color: #ffffff;
+  color: #000000;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#signin-form,
+#signup-form {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#signin-form div,
+#signup-form .form-group {
+  width: 100%;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-size: 1em;
+  margin-bottom: 5px;
+  width: 100%;
+  text-align: left;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="color"] {
+  padding: 2px;
+  height: 34px;
+}
+
+#submit_button,
+#submitButton {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#submit_button:hover,
+#submitButton:hover {
+  background-color: #0056b3;
+}
+
+#passwordError {
+  font-size: 0.9em;
+  color: red;
+  margin-top: 5px;
+  text-align: center;
+  display: none;
+}
+
+.links {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.links p {
+  margin: 5px 0;
+}
+
+.links a {
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+#userView,
+#superUserView {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  text-align: center;
+}
+
+#userLink,
+#superUserLink,
+#signoutLink {
+  display: inline-block;
+  margin: 10px 15px;
+  padding: 8px 15px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+#userLink:hover,
+#superUserLink:hover,
+#signoutLink:hover {
+  background-color: #218838;
+}
+
+.page-container {
+  max-width: 800px;
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#appTitle {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-align: center;
+  color: var(--font-color, #333333);
+}
+
+#siteDescription {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--font-color, #666666);
+}
+
+.nav-link {
+  display: inline-block;
+  margin: 10px 15px;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #0056b3;
+}
+
+footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  font-size: 0.9em;
+  color: var(--font-color, #666666);
+  width: 100%;
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+
+  #appTitle {
+      font-size: 2em;
+  }
+
+  #siteDescription {
+      font-size: 1em;
+  }
+
+  .nav-link,
+  #userLink,
+  #superUserLink,
+  #signoutLink {
+      display: block;
+      margin: 10px auto;
+      text-align: center;
+  }
+
+  #signin-form,
+  #signup-form {
+      padding: 15px;
+  }
+
+  h1 {
+      font-size: 1.5em;
+  }

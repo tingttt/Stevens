@@ -1,0 +1,40 @@
+{{!-- This will be your default layout for all handlebars file rendered. This will be inherited by all other templates.
+Refer lecture code to learn more on how this works
+don't forget to include your css and your client-side script file references in the layout.
+for the theme, you can simply read the themePreference for the user and inject it into the body element
+<body class="{{themePreference}}> --}}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{{title}}}</title>
+    <link rel="stylesheet" href="/public/css/sitestyles.css">
+</head>
+<body class="{{themePreference}}" style="{{#if themePreference}} background-color: {{themePreference.backgroundColor}}; color: {{themePreference.fontColor}};{{/if}}">
+    <h1 id="appTitle">Lab 10 - Login System</h1>
+    <p id="siteDescription">This is a login system for lab 10, the final lab of the semester.</p>
+    {{#if login}}
+        {{#if superuser}}
+            <a id="userlink" href="/user">User Page</a>
+            <a id="superuserlink" href="/superuser">Super User Page</a>
+        {{else}}
+            <a id="userlink" href="/user">User Page</a>
+        {{/if}}
+    {{else}}
+        <a id="signuplink" href="/register">Register Here</a>   
+        <a id="loginlink" href="/login">Login Here</a>
+    {{/if}}
+    <main>
+    {{{body}}}
+    </main>
+    <footer>
+        <p>Tingting Luan</p>
+        <p>20035571</p>
+    </footer>
+    <script src="/public/js/form_validate.js"></script>
+</body>
+</html>

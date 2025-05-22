@@ -1,0 +1,98 @@
+Q1
+with t1 as(
+	select sales.prod, sales.month, avg(r1.quant) prev_avg
+	from sales left outer join sales r1
+	on r1.prod = sales.prod and r1.month+1 = sales.month
+	group by sales.prod, sales.month
+)
+,t2 as(
+	select sales.prod, sales.month, avg(r2.quant) next_avg
+	from sales left outer join sales r2
+	on r2.prod = sales.prod and r2.month-1 = sales.month
+	group by sales.prod, sales.month
+)
+
+
+,t3 as(
+select distinct sales.prod, sales.month, prev_avg, next_avg 
+from sales natural join t1 natural join t2)
+
+
+,t4 as 
+(select t3.prod, t3.month, count(s.quant)
+from sales s natural join t3
+where (s.quant between t3.prev_avg and t3.next_avg)
+or (s.quant between t3.next_avg and t3.prev_avg)
+group by t3.prod, t3.month
+)
+select * from t4
+order by prod, month
+
+
+Q2
+with q1 as(
+select cust, prod, avg(quant)
+from sales 
+where month in (1,2,3)
+group by prod, cust),
+q2 as(
+select cust, prod, avg(quant)
+from sales 
+where month in (4,5,6)
+group by prod, cust),
+q3 as(
+select cust, prod, avg(quant)
+from sales 
+where month in (7,8,9)
+group by prod, cust),
+q4 as(
+select cust, prod, avg(quant)
+from sales 
+where month in (10,11,12)
+group by prod, cust),
+t1 as (
+select distinct q1.cust, q1.prod, 1 as qrtr, Null::numeric as before_avg, q1.avg during_avg, q2.avg after_avg
+from q1 inner join q2 on q1.cust = q2.cust and q1.prod = q2.prod
+union
+select distinct q2.cust, q2.prod, 2 as qrtr, q1.avg before_avg, q2.avg during_avg, q3.avg after_avg
+from q2 inner join q3 on q2.cust = q3.cust and q2.prod = q3.prod
+	inner join q1 on q2.cust = q1.cust and q2.prod = q1.prod
+union
+select distinct q3.cust, q3.prod, 3 as qrtr, q2.avg before_avg, q3.avg during_avg, q4.avg after_avg
+from q3 inner join q2 on q3.cust = q2.cust and q3.prod = q2.prod
+	inner join q4 on q3.cust = q4.cust and q3.prod = q4.prod
+union
+select distinct q4.cust, q4.prod, 4 as qrtr, q3.avg before_avg, q4.avg during_avg, Null::numeric as after_avg
+from q4 inner join q3 on q4.cust = q3.cust and q4.prod = q3.prod
+order by cust, prod, qrtr
+)
+select cust customer, prod product, qrtr, before_avg, during_avg, after_avg
+from t1
+
+Q3
+with t1 as(
+select cust customer, prod product, state, avg(quant) prod_avg
+from sales
+group by cust, prod, state),
+t2 as(
+select t1.customer, t1.product, t1.state, avg(r1.quant) other_cust_avg, avg(r2.quant) other_prod_avg
+from t1 , sales r1, sales r2
+where (t1.state = r1.state and t1.product = r1.prod and t1.customer != r1.cust)
+	and (t1.state = r2.state and t1.customer = r2.cust and t1.product != r2.prod)
+group by t1.customer, t1.product, t1.state)
+
+select * 
+from t1 natural join t2
+order by customer, product, state
+
+Q4
+SELECT distinct on (s1.prod) s1.prod product, s1.quant as median_quant
+FROM sales s1
+WHERE (SELECT COUNT(*) 
+       FROM sales s2 
+       WHERE s1.prod = s2.prod AND s1.quant >= s2.quant) >= 
+      (SELECT COUNT(*) 
+       FROM sales s2 
+       WHERE s1.prod = s2.prod) / 2
+order by prod, quant
+
